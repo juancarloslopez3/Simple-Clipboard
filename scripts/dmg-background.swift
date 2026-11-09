@@ -19,8 +19,8 @@ let H: CGFloat = 400
 let safeBottom: CGFloat = H - 28
 
 // Icon centres, in Finder coordinates (origin top-left).
-let appSlot = CGPoint(x: 172, y: 196)
-let applicationsSlot = CGPoint(x: 488, y: 196)
+let appSlot = CGPoint(x: 172, y: 206)
+let applicationsSlot = CGPoint(x: 488, y: 206)
 
 // The card behind each icon also has to hold the label Finder draws under it
 // (12pt text, starting a few points below the 128pt icon).
@@ -108,27 +108,21 @@ func drawHeader(version: String?) {
     let titleSize = titleText.size()
     let titleTop: CGFloat = 30
 
-    guard let version, !version.isEmpty else {
-        drawCentered(titleText, topY: titleTop)
-        drawSubtitle(below: titleTop + titleSize.height)
-        return
-    }
+    // The title is centred on its own, so the version pill goes below the
+    // subtitle rather than beside the title, which would pull the title off-centre.
+    drawCentered(titleText, topY: titleTop)
+    let subtitleTop = titleTop + titleSize.height + 4
+    drawSubtitle(below: titleTop + titleSize.height)
 
-    // Title and a version pill, centred as one group.
+    guard let version, !version.isEmpty else { return }
+
     let badgeText = text(version, font(11, .semibold), accent)
     let badgeTextSize = badgeText.size()
     let badgeSize = CGSize(width: ceil(badgeTextSize.width) + 14, height: 20)
-    let gap: CGFloat = 8
-    let groupWidth = titleSize.width + gap + badgeSize.width
-    let titleX = ((W - groupWidth) / 2).rounded()
-    titleText.draw(at: NSPoint(x: titleX, y: flip(titleTop) - ceil(titleSize.height)))
-
-    // Sit the pill on the title's optical centre (half its cap height above the baseline).
-    let titleFont = font(26, .bold)
-    let baseline = flip(titleTop) - ceil(titleSize.height) - titleFont.descender
-    let badgeRect = NSRect(
-        x: titleX + titleSize.width + gap,
-        y: (baseline + titleFont.capHeight / 2 - badgeSize.height / 2).rounded(),
+    let badgeTop = subtitleTop + 22
+    let badgeRect = finderRect(
+        x: ((W - badgeSize.width) / 2).rounded(),
+        top: badgeTop,
         width: badgeSize.width,
         height: badgeSize.height
     )
@@ -142,8 +136,6 @@ func drawHeader(version: String?) {
         x: badgeRect.midX - badgeTextSize.width / 2,
         y: badgeRect.midY - badgeTextSize.height / 2
     ))
-
-    drawSubtitle(below: titleTop + titleSize.height)
 }
 
 func drawSubtitle(below y: CGFloat) {

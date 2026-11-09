@@ -22,9 +22,11 @@ WINDOW_WIDTH=660
 WINDOW_HEIGHT=400
 ICON_SIZE=128
 APP_ICON_X=172
-APP_ICON_Y=196
+# Finder places the icon ~47pt lower than these coordinates suggest, so these
+# are set to put the icon centres (y=206 in dmg-background.swift) on the cards' centres.
+APP_ICON_Y=190
 APPLICATIONS_ICON_X=488
-APPLICATIONS_ICON_Y=196
+APPLICATIONS_ICON_Y=190
 
 # Finder's `bounds` is the window's *outer* frame, but the background image and
 # the icon coordinates are both anchored to the content area below the title
