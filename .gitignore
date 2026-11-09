@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Xcode — user-specific state (keep the .xcodeproj itself, ignore per-user data)
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+
+# Xcode build output
+build/
+DerivedData/
+dist/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.pins
+
+# This project: local SwiftPM working directory produced by the build tooling
+.spm/
